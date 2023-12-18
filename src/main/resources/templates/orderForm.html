@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <title>Данные доставки и оплаты</title>
+    <link rel="stylesheet" th:href="@{/styles.css}"/>
+</head>
+<body>
+<form method="post" th:action="@{/orders}" th:object="${burgerOrder}">
+    <h1>Введите данные доставки и оплаты</h1>
+    <img th:src="@{/images/BurgerCraft.png}" width="500" height="500">
+
+    <h3>Ваши бургеры в этом заказе:</h3>
+    <a th:href="@{/design}" id="another">Создать ещё один бургер</a>
+    <ul>
+        <li th:each="burger : ${burgerOrder.burgers}">
+            <span th:text="${burger.name}">Имя бургера</span>
+        </li>
+    </ul>
+
+    <div th:if="${#fields.hasErrors()}">
+        <span class="validationError">
+            Исправьте приведенные ниже проблемы и отправьте свой бургер снова.
+        </span>
+    </div>
+
+    <h3>Адрес доставки</h3>
+    <label> Имя заказа:
+        <input type="text" th:field="*{deliveryName}"/>
+    </label>
+    <span class="validationError"
+          th:if="${#fields.hasErrors('deliveryName')}"
+          th:errors="*{deliveryName}">Name Error</span>
+    </br>
+
+    <label> Улица:
+        <input type="text" th:field="*{deliveryStreet}"/>
+    </label>
+    <span class="validationError"
+          th:if="${#fields.hasErrors('deliveryStreet')}"
+          th:errors="*{deliveryStreet}">Street Error</span>
+    </br>
+
+    <label> Город:
+        <input type="text" th:field="*{deliveryCity}"/>
+    </label>
+    <span class="validationError"
+          th:if="${#fields.hasErrors('deliveryCity')}"
+          th:errors="*{deliveryCity}">City Error</span>
+    </br>
+
+    <label> Область:
+        <input type="text" th:field="*{deliveryState}"/>
+    </label>
+    <span class="validationError"
+          th:if="${#fields.hasErrors('deliveryState')}"
+          th:errors="*{deliveryState}">State Error</span>
+    </br>
+
+    <label> Код:
+        <input type="text" th:field="*{deliveryZip}"/>
+    </label>
+    <span class="validationError"
+          th:if="${#fields.hasErrors('deliveryZip')}"
+          th:errors="*{deliveryZip}">Zip Error</span>
+    </br>
+
+    <h3>Оплата:</h3>
+    <label> Номер карты:
+        <input type="text" th:field="*{ccNumber}">
+    </label>
+    <span class="validationError"
+          th:if="${#fields.hasErrors('ccNumber')}"
+          th:errors="*{ccNumber}">CC Num Error</span>
+    </br>
+
+    <label> Срок окончания:
+        <input type="text" th:field="*{ccExpiration}">
+    </label>
+    <span class="validationError"
+          th:if="${#fields.hasErrors('ccExpiration')}"
+          th:errors="*{ccExpiration}">CC Num Error</span>
+    </br>
+
+    <label> CVV:
+        <input type="text" th:field="*{ccCVV}">
+    </label>
+    <span class="validationError"
+          th:if="${#fields.hasErrors('ccCVV')}"
+          th:errors="*{ccCVV}">CC Num Error</span>
+    </br>
+
+    <input type="submit" value="Отправить заказ"/>
+</form>
+</body>
+</html>
