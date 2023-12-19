@@ -4,38 +4,32 @@ import com.sosadwaden.burgercraft.burger.Burger;
 import com.sosadwaden.burgercraft.burger.BurgerOrder;
 import com.sosadwaden.burgercraft.burger.Ingredient;
 import com.sosadwaden.burgercraft.burger.Ingredient.IngredientType;
+import com.sosadwaden.burgercraft.data.IngredientRepository;
 import jakarta.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
-@Slf4j
 @Controller
 @RequestMapping("/design")
 @SessionAttributes("burgerOrder")
 public class DesignBurgerController {
 
+    private final IngredientRepository ingredientRepository;
+
+    @Autowired
+    public DesignBurgerController(IngredientRepository ingredientRepository) {
+        this.ingredientRepository = ingredientRepository;
+    }
+
     @ModelAttribute
     public void addIngredientsToModel(Model model) {
-        List<Ingredient> ingredients = Arrays.asList(
-                new Ingredient("BLBR", "Чёрный хлеб", IngredientType.WRAP),
-                new Ingredient("WHBR", "Белый хлеб", IngredientType.WRAP),
-                new Ingredient("CHIC", "Курица", IngredientType.PROTEIN),
-                new Ingredient("GRBF", "Говяжий фарш", IngredientType.PROTEIN),
-                new Ingredient("TMTO", "Помидоры", IngredientType.VEGGIES),
-                new Ingredient("LETC", "Салат", IngredientType.VEGGIES),
-                new Ingredient("CHED", "Чеддер", IngredientType.CHEESE),
-                //new Ingredient("JACK", "Monterrey Jack", IngredientType.CHEESE),
-                new Ingredient("KETC", "Кетчуп", IngredientType.SAUCE),
-                new Ingredient("SLSA", "Салься", IngredientType.SAUCE)
-        );
-
+       Iterable<Ingredient> ingredients = ingredientRepository.findAll();
         IngredientType[] types = IngredientType.values();
         for (IngredientType type: types) {
             model.addAttribute(type.toString().toLowerCase(),
@@ -67,13 +61,13 @@ public class DesignBurgerController {
         }
 
         burgerOrder.addBurger(burger);
-        log.info("Приготовление бургера: {}", burger);
+        // log.info("Приготовление бургера: {}", burger);
 
         return "redirect:/orders/current";
     }
 
-    private Iterable<Ingredient> filterByType(List<Ingredient> ingredients, IngredientType type) {
-        return ingredients.stream()
+    private Iterable<Ingredient> filterByType(Iterable<Ingredient> ingredients, IngredientType type) {
+        return StreamSupport.stream(ingredients.spliterator(), false)
                 .filter(it -> it.getType().equals(type))
                 .collect(Collectors.toList());
     }

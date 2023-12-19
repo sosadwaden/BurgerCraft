@@ -1,0 +1,8 @@
+# Отключает кеширование шаблонов в Thymeleaf. TODO Удалить (или выставить в true) при развёртывании куда либо
+spring:
+  thymeleaf:
+    cache: false
+
+  datasource:
+    generate-unique-name: false
+    name: burgercraft

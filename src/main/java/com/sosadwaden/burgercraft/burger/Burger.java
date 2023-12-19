@@ -4,10 +4,15 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
 public class Burger {
+
+    private Long id;
+
+    private Date createdAt = new Date();
 
     @NotNull
     @Size(min = 5, message = "Имя должно быть хотя 5 символов в длину")
@@ -15,5 +20,5 @@ public class Burger {
 
     @NotNull
     @Size(min = 1, message = "Вы должны выбрать хотя бы 1 ингредиент")
-    private List<Ingredient> ingredients;
+    private List<IngredientRef> ingredients;
 }
