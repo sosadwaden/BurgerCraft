@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -29,7 +31,9 @@ public class DesignBurgerController {
 
     @ModelAttribute
     public void addIngredientsToModel(Model model) {
-       Iterable<Ingredient> ingredients = ingredientRepository.findAll();
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredientRepository.findAll().forEach(ingredient -> ingredients.add(ingredient));
+
         IngredientType[] types = IngredientType.values();
         for (IngredientType type: types) {
             model.addAttribute(type.toString().toLowerCase(),
@@ -61,14 +65,13 @@ public class DesignBurgerController {
         }
 
         burgerOrder.addBurger(burger);
-        // log.info("Приготовление бургера: {}", burger);
 
         return "redirect:/orders/current";
     }
 
-    private Iterable<Ingredient> filterByType(Iterable<Ingredient> ingredients, IngredientType type) {
-        return StreamSupport.stream(ingredients.spliterator(), false)
-                .filter(it -> it.getType().equals(type))
+    private Iterable<Ingredient> filterByType(List<Ingredient> ingredients, IngredientType type) {
+        return ingredients.stream()
+                .filter(in -> in.getType().equals(type))
                 .collect(Collectors.toList());
     }
 

@@ -1,14 +1,8 @@
 package com.sosadwaden.burgercraft.data;
 
 import com.sosadwaden.burgercraft.burger.Ingredient;
+import org.springframework.data.repository.CrudRepository;
 
-import java.util.Optional;
+public interface IngredientRepository extends CrudRepository<Ingredient, String> {
 
-public interface IngredientRepository {
-
-    Optional<Ingredient> findById(String id);
-
-    Iterable<Ingredient> findAll();
-
-    Ingredient save(Ingredient ingredient);
 }

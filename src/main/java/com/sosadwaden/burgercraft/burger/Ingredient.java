@@ -1,13 +1,26 @@
 package com.sosadwaden.burgercraft.burger;
 
-import lombok.Data;
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.domain.Persistable;
+import org.springframework.data.relational.core.mapping.Table;
 
 @Data
-public class Ingredient {
+@Table
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
+public class Ingredient implements Persistable<String>  {
 
-    private final String id;
-    private final String name;
-    private final IngredientType type;
+    @Id
+    private String id;
+
+    private String name;
+    private IngredientType type;
+
+    @Override
+    public boolean isNew() {
+        return true;
+    }
 
     public enum IngredientType {
         WRAP, PROTEIN, VEGGIES, CHEESE, SAUCE
