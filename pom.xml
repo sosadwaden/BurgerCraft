@@ -11,7 +11,7 @@
 
     <groupId>com.sosadwaden</groupId>
     <artifactId>BurgerCraft</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3-SNAPSHOT</version>
 
     <name>BurgerCraft</name>
     <description>BurgerCraft</description>
@@ -20,7 +20,7 @@
         <connection>scm:git:git@github.com:sosadwaden/BurgerCraft.git</connection>
         <developerConnection>scm:git:git@github.com:sosadwaden/BurgerCraft.git</developerConnection>
         <url>https://github.com/sosadwaden/BurgerCraft</url>
-      <tag>BurgerCraft-0.0.2</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <properties>
