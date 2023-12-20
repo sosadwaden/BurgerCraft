@@ -11,7 +11,7 @@
 
     <groupId>com.sosadwaden</groupId>
     <artifactId>BurgerCraft</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.4-SNAPSHOT</version>
 
     <name>BurgerCraft</name>
     <description>BurgerCraft</description>
